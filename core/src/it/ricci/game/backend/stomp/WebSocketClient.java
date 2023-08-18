@@ -1,9 +1,11 @@
 package it.ricci.game.backend.stomp;
 
+import it.ricci.game.Drop;
 import it.ricci.game.backend.application.services.StatoGiocoApplicationService;
 import it.ricci.game.backend.esempio.RicevitoreTest;
 import it.ricci.game.entities.DatiInput;
 import it.ricci.game.entities.GiocatoreResource;
+import it.ricci.game.entities.StatoGiocoResource;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -11,6 +13,7 @@ import org.springframework.messaging.converter.MappingJackson2MessageConverter;
 import org.springframework.messaging.converter.StringMessageConverter;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.messaging.simp.stomp.StompSession;
+import org.springframework.messaging.simp.stomp.StompSession.Receiptable;
 import org.springframework.messaging.simp.stomp.StompSessionHandler;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.WebSocketHttpHeaders;
@@ -36,7 +39,7 @@ public class WebSocketClient {
   private StompSession stompSession;
 
 
-  public void connectToWebSocket() {
+  public void connectToWebSocket(UUID username) {
 
     System.out.println("Mi sto connettendo");
 
@@ -46,10 +49,11 @@ public class WebSocketClient {
     stompClient.setMessageConverter(new MappingJackson2MessageConverter());
 
     //    StompSessionHandler sessionHandler = new TestStomSessionHandler();
-    StompSessionHandler sessionHandler = new RicevitoreTest();
+//    StompSessionHandler sessionHandler = new RicevitoreTest();
+    StompSessionHandler sessionHandler = new RicevitoreStatoGioco();
 
     WebSocketHttpHeaders handshakeHeaders = new WebSocketHttpHeaders();
-    handshakeHeaders.add("username", UUID.randomUUID().toString());
+    handshakeHeaders.add("username", username.toString());
 
     try {
       StompSession stompSession = stompClient.connect(url, handshakeHeaders, sessionHandler).get();
@@ -72,6 +76,8 @@ public class WebSocketClient {
   }
 
   public void inviaDatiInput(DatiInput input){
-    stompSession.send("/app/key-input", input);
+    input.setUsername(Drop.username.toString());
+    Receiptable send = stompSession.send("/app/key-input", input);
+    log.info("TEST STATO: "+send);
   }
 }

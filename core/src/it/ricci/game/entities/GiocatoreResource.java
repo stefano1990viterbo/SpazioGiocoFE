@@ -4,9 +4,11 @@ import it.ricci.game.attori.Navicella;
 import java.util.UUID;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
+@ToString
 public class GiocatoreResource {
   public GiocatoreResource() {
   }

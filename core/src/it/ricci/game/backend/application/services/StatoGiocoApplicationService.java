@@ -29,18 +29,24 @@ public class StatoGiocoApplicationService implements AggiornaStatoGiocoUseCase {
 
   private List<Giocatore> giocatori = new ArrayList<>();
 
+  private List<GiocatoreResource> player = new ArrayList<>();
+
 
   @Override
   public void aggiornaStatoGioco(StatoGiocoResource statoGioco) {
-
     pulisciGiocatori();
 
-    List<GiocatoreResource> giocatoreResources = statoGioco.getGiocatoreResources();
+    List<GiocatoreResource> giocatoreResources = statoGioco.getGiocatori();
 
-    for (GiocatoreResource giocatoreReource : giocatoreResources) {
-      Giocatore giocatore = new Giocatore(giocatoreReource);
-      giocatori.add(giocatore);
-    }
+    this.player= giocatoreResources;
+
+    giocatoreResources.forEach(g -> log.info("PLAYER: "+g.toString()));
+
+//    for (GiocatoreResource giocatoreReource : giocatoreResources) {
+//      Giocatore giocatore = new Giocatore(giocatoreReource);
+//      giocatori.add(giocatore);
+//      Drop.creazioneNav(giocatoreReource);
+//    }
   }
 
   private void pulisciGiocatori() {

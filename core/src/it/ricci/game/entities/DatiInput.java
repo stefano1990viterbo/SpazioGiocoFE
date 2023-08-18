@@ -10,6 +10,7 @@ import lombok.ToString;
 @Builder
 @ToString
 public class DatiInput {
+  private String username;
   private int keyDown;
   private int mouseX;
   private int mouseY;

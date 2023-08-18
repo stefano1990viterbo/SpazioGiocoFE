@@ -13,7 +13,9 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 import java.util.logging.Logger;
+import lombok.extern.log4j.Log4j2;
 
+@Log4j2
 public class Navicella extends Rectangle {
 
   static final Logger logger = Logger.getLogger(Navicella.class.getName());
@@ -65,10 +67,10 @@ public class Navicella extends Rectangle {
   }
 
   void initAsset() {
-    image = new Texture(Gdx.files.internal("rocket.png"));
-    //    laserImage = new Texture(Gdx.files.internal("laser.png"));
-    imageDestory = new Texture(Gdx.files.internal("esplode.png"));
-    tempImage = image;
+      image = new Texture(Gdx.files.internal("rocket.png"));
+      //    laserImage = new Texture(Gdx.files.internal("laser.png"));
+      imageDestory = new Texture(Gdx.files.internal("esplode.png"));
+      tempImage = image;
   }
 
   private void spostamenti() {

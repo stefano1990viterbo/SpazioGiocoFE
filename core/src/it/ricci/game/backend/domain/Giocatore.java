@@ -6,9 +6,11 @@ import java.util.UUID;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
+@ToString
 public class Giocatore {
 
   private UUID id;
@@ -30,9 +32,21 @@ public class Giocatore {
     this.username= resource.getUsername();
 
     navicella = new Navicella();
-    navicella.setRotazioneInGradi(resource.getAngoloDiDirezione().floatValue());
-    navicella.setX(resource.getX().floatValue());
-    navicella.setY(resource.getY().floatValue());
+
+    if(resource.getAngoloDiDirezione()!=null){
+      navicella.setRotazioneInGradi(resource.getAngoloDiDirezione().floatValue());
+      navicella.setX(resource.getX().floatValue());
+      navicella.setY(resource.getY().floatValue());
+    }else if (resource.getX()!=null){
+      navicella.setRotazioneInGradi(0);
+      navicella.setX(resource.getX().floatValue());
+      navicella.setY(resource.getY().floatValue());
+    }else {
+      navicella.setRotazioneInGradi(2);
+      navicella.setX(150);
+      navicella.setY(150);
+
+    }
   }
 
   public void aggiornaStatoGiocatore(GiocatoreResource nuovoStato){
