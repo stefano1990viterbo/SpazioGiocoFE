@@ -42,7 +42,7 @@ public class Giocatore {
       navicella.setX(resource.getX().floatValue());
       navicella.setY(resource.getY().floatValue());
     }else {
-      navicella.setRotazioneInGradi(2);
+      navicella.setRotazioneInGradi(0);
       navicella.setX(150);
       navicella.setY(150);
 

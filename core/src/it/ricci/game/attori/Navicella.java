@@ -173,6 +173,7 @@ public class Navicella extends Rectangle {
     float originY =
         textureRegion.getRegionHeight() / 2f; // Punto centrale della texture sull'asse y
     float rotationDegrees = getRotazioneInGradi(); // Angolo di rotazione in gradi
+//    float rotationDegrees =calcoloAngoloDiRotazione(); // Angolo di rotazione in gradi
 
     batch.draw(
         textureRegion,
