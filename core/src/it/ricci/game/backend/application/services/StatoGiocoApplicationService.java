@@ -3,6 +3,7 @@ package it.ricci.game.backend.application.services;
 import it.ricci.game.backend.application.ports.input.AggiornaStatoGiocoUseCase;
 import it.ricci.game.backend.domain.Giocatore;
 import it.ricci.game.entities.GiocatoreResource;
+import it.ricci.game.entities.ProiettileResource;
 import it.ricci.game.entities.StatoGiocoResource;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,20 +28,22 @@ public class StatoGiocoApplicationService implements AggiornaStatoGiocoUseCase {
     return INSTANCE;
   }
 
-  private List<Giocatore> giocatori = new ArrayList<>();
+//  private List<Giocatore> giocatori = new ArrayList<>();
 
   private List<GiocatoreResource> player = new ArrayList<>();
+  private List<ProiettileResource> proiettileResources = new ArrayList<>();
 
 
   @Override
   public void aggiornaStatoGioco(StatoGiocoResource statoGioco) {
-    pulisciGiocatori();
+//    pulisciGiocatori();
 
-    List<GiocatoreResource> giocatoreResources = statoGioco.getGiocatori();
+//    player.clear();
+//    List<GiocatoreResource> giocatoreResources = statoGioco.getGiocatori();
 
-    this.player= giocatoreResources;
+    this.proiettileResources = statoGioco.getProiettili();
+    this.player= statoGioco.getGiocatori();
 
-    giocatoreResources.forEach(g -> log.info("PLAYER: "+g.toString()));
 
 //    for (GiocatoreResource giocatoreReource : giocatoreResources) {
 //      Giocatore giocatore = new Giocatore(giocatoreReource);
@@ -49,10 +52,10 @@ public class StatoGiocoApplicationService implements AggiornaStatoGiocoUseCase {
 //    }
   }
 
-  private void pulisciGiocatori() {
-    for (Giocatore giocatore : giocatori) {
-      giocatore.getNavicella().dispose();
-    }
-    giocatori.clear();
-  }
+//  private void pulisciGiocatori() {
+//    for (Giocatore giocatore : giocatori) {
+//      giocatore.getNavicella().dispose();
+//    }
+//    giocatori.clear();
+//  }
 }

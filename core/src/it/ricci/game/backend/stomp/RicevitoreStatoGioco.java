@@ -24,9 +24,12 @@ public class RicevitoreStatoGioco extends StompSessionHandlerAdapter {
 
   @Override
   public void handleFrame(StompHeaders headers, Object payload) {
-    log.info("Received message: " + payload);
-
     StatoGiocoResource payload1 = (StatoGiocoResource) payload;
+
+//    log.info("TEST ricevuto: "+payload1);
+
+//    payload1.getProiettili().forEach(p-> log.info(p.toString()));
+
     StatoGiocoApplicationService.getInstance().aggiornaStatoGioco(payload1);
     //      aggiornaStatoGiocoUseCase.aggiornaStatoGioco(payload1);
   }
@@ -56,7 +59,4 @@ public class RicevitoreStatoGioco extends StompSessionHandlerAdapter {
     super.handleTransportError(session, exception);
   }
 
-//  public void onRicevoStatoGiocoAggiornato(StatoGiocoResource statoGioco) {
-//    SpazioGioco.aggiornaStato(statoGioco);
-//  }
 }

@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 import java.util.logging.Logger;
@@ -32,7 +31,7 @@ public class Navicella extends Rectangle {
 
   private float rotazioneInGradi;
 
-  private Array<Proiettile> proiettili = new Array<>();
+  private Array<ProiettileActor> proiettili = new Array<>();
   private long lastProiettileTime;
   private boolean puoiSparare = true;
 
@@ -73,81 +72,24 @@ public class Navicella extends Rectangle {
       tempImage = image;
   }
 
-  private void spostamenti() {
-    configuraMovimentoConFrecce();
-    configuraMovimentoConWASD();
-    setRotazioneInGradi(calcoloAngoloDiRotazione());
-    configuraSparo();
-  }
+//  private void spostamenti() {
+//    configuraMovimentoConFrecce();
+//    configuraMovimentoConWASD();
+//    setRotazioneInGradi(calcoloAngoloDiRotazione());
+//    configuraSparo();
+//  }
 
   private void configuraSparo() {
     if (Gdx.input.isKeyPressed(Input.Keys.SPACE) && puoiSparare) {
       //      creazioneProiettile();
-      Proiettile proiettile = new Proiettile();
+      ProiettileActor proiettile = new ProiettileActor();
       proiettile.creazioneProiettile(this);
       proiettili.add(proiettile);
     }
   }
 
-  private float calcoloAngoloDiRotazione() {
 
-    Vector3 touchPos = new Vector3();
-    float yInvertita = Gdx.graphics.getHeight() - Gdx.input.getY();
-    touchPos.set(Gdx.input.getX(), yInvertita, 0);
 
-    float x = this.getX() + WIDTH;
-    float y = this.getY() + HEIGHT;
-
-    float dy = touchPos.y - y;
-    float dx = x - touchPos.x;
-
-    // Calcola l'angolazione in radianti
-    float angleRadians = (float) Math.atan2(dx, dy);
-
-    // Converti l'angolo in grad
-    return (float) Math.toDegrees(angleRadians);
-  }
-
-  private void configuraMovimentoConWASD() {
-
-    if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-      this.x -= velocitaNavicella * Gdx.graphics.getDeltaTime();
-    }
-    if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-      this.x += velocitaNavicella * Gdx.graphics.getDeltaTime();
-    }
-
-    if (Gdx.input.isKeyPressed(Input.Keys.W)) {
-      this.y += velocitaNavicella * Gdx.graphics.getDeltaTime();
-    }
-
-    if (Gdx.input.isKeyPressed(Input.Keys.S)) {
-      this.y -= velocitaNavicella * Gdx.graphics.getDeltaTime();
-    }
-
-    if (Gdx.input.isKeyPressed(Input.Keys.F)) {
-      setVelocitaNavicella(SUPER_VELOCITA_NAVICELLA);
-    } else {
-      setVelocitaNavicella(VELOCITA_NAVICELLA);
-    }
-  }
-
-  private void configuraMovimentoConFrecce() {
-    if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-      this.x -= velocitaNavicella * Gdx.graphics.getDeltaTime();
-    }
-    if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-      this.x += velocitaNavicella * Gdx.graphics.getDeltaTime();
-    }
-
-    if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-      this.y += velocitaNavicella * Gdx.graphics.getDeltaTime();
-    }
-
-    if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-      this.y -= velocitaNavicella * Gdx.graphics.getDeltaTime();
-    }
-  }
 
   public void controlloIntervalloCreazioneProiettile() {
     if (TimeUtils.nanoTime() - lastProiettileTime > 100000000) {
@@ -160,7 +102,7 @@ public class Navicella extends Rectangle {
 
     drawNavicella(batch);
 
-    for (Proiettile p : this.proiettili) {
+    for (ProiettileActor p : this.proiettili) {
       //      batch.draw(laserImage, p.x, p.y);
       p.eseguiDraw(batch);
     }
@@ -223,16 +165,16 @@ public class Navicella extends Rectangle {
     this.getImage().dispose();
   }
 
-  public Array<Proiettile> getProiettili() {
+  public Array<ProiettileActor> getProiettili() {
     return proiettili;
   }
 
-  public void elementiRender(Array<Rectangle> gocce, Array<Rectangle> asteroidi) {
-    this.spostamenti();
-    this.limiti();
-    //    this.movimentoProiettile(gocce, asteroidi);
-    this.controlloIntervalloCreazioneProiettile();
-  }
+//  public void elementiRender(Array<Rectangle> gocce, Array<Rectangle> asteroidi) {
+//    this.spostamenti();
+//    this.limiti();
+//    //    this.movimentoProiettile(gocce, asteroidi);
+//    this.controlloIntervalloCreazioneProiettile();
+//  }
 
   public void setImage(Texture image) {
     this.image = image;

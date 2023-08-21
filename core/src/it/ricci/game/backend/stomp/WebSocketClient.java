@@ -1,17 +1,11 @@
 package it.ricci.game.backend.stomp;
 
 import it.ricci.game.Drop;
-import it.ricci.game.backend.application.services.StatoGiocoApplicationService;
-import it.ricci.game.backend.esempio.RicevitoreTest;
-import it.ricci.game.entities.DatiInput;
 import it.ricci.game.entities.GiocatoreResource;
-import it.ricci.game.entities.StatoGiocoResource;
+import it.ricci.game.entities.input_utente.DatiInput;
 import java.util.UUID;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.messaging.converter.MappingJackson2MessageConverter;
-import org.springframework.messaging.converter.StringMessageConverter;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.messaging.simp.stomp.StompSession;
 import org.springframework.messaging.simp.stomp.StompSession.Receiptable;
 import org.springframework.messaging.simp.stomp.StompSessionHandler;
@@ -70,14 +64,12 @@ public class WebSocketClient {
   }
 
   public void inviaDatiGiocatore(GiocatoreResource giocatoreResource) {
-    log.info("TEST invio dati"+giocatoreResource);
     stompSession.send("/app/inviogiocatore", giocatoreResource);
 
   }
 
   public void inviaDatiInput(DatiInput input){
-    input.setUsername(Drop.username.toString());
+    input.setUsernameKeyboard(Drop.username.toString());
     Receiptable send = stompSession.send("/app/key-input", input);
-    log.info("TEST STATO: "+send);
   }
 }

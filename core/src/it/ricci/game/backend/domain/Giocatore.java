@@ -7,10 +7,12 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import lombok.extern.log4j.Log4j2;
 
 @Getter
 @Setter
 @ToString
+@Log4j2
 public class Giocatore {
 
   private UUID id;
@@ -28,31 +30,17 @@ public class Giocatore {
 
   public Giocatore(GiocatoreResource resource) {
 
-    this.id=resource.getId();
-    this.username= resource.getUsername();
+    this.id = resource.getId();
+    this.username = resource.getUsername();
 
     navicella = new Navicella();
 
-    if(resource.getAngoloDiDirezione()!=null){
-      navicella.setRotazioneInGradi(resource.getAngoloDiDirezione().floatValue());
-      navicella.setX(resource.getX().floatValue());
-      navicella.setY(resource.getY().floatValue());
-    }else if (resource.getX()!=null){
-      navicella.setRotazioneInGradi(0);
-      navicella.setX(resource.getX().floatValue());
-      navicella.setY(resource.getY().floatValue());
-    }else {
-      navicella.setRotazioneInGradi(0);
-      navicella.setX(150);
-      navicella.setY(150);
+    float angolo =
+        resource.getAngoloDiDirezione() == null ? 90 : resource.getAngoloDiDirezione().floatValue();
 
-    }
+    navicella.setRotazioneInGradi(angolo);
+    navicella.setX(resource.getX().floatValue());
+    navicella.setY(resource.getY().floatValue());
   }
 
-  public void aggiornaStatoGiocatore(GiocatoreResource nuovoStato){
-    //TODO
-    navicella.setRotazioneInGradi(nuovoStato.getAngoloDiDirezione().floatValue());
-    navicella.setX(nuovoStato.getX().floatValue());
-    navicella.setY(nuovoStato.getY().floatValue());
-  }
 }

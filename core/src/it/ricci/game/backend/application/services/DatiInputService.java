@@ -1,7 +1,7 @@
 package it.ricci.game.backend.application.services;
 
 import it.ricci.game.backend.stomp.WebSocketClient;
-import it.ricci.game.entities.DatiInput;
+import it.ricci.game.entities.input_utente.DatiInput;
 
 public class DatiInputService {
   private static DatiInputService INSTANCE;

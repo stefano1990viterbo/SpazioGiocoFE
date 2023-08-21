@@ -1,7 +1,6 @@
 package it.ricci.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -10,18 +9,19 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import it.ricci.game.attori.*;
 import it.ricci.game.backend.application.services.StatoGiocoApplicationService;
 import it.ricci.game.backend.domain.Giocatore;
+import it.ricci.game.backend.domain.Proiettile;
 import it.ricci.game.backend.infrastructure.InputProcessorCustom;
-import it.ricci.game.backend.stomp.RicevitoreStatoGioco;
 import it.ricci.game.backend.stomp.WebSocketClient;
-import it.ricci.game.entities.DatiInput;
 import it.ricci.game.entities.GiocatoreResource;
+import it.ricci.game.entities.ProiettileResource;
+import it.ricci.game.entities.input_utente.DatiInput;
+import it.ricci.game.entities.input_utente.KeyDown;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
 import java.util.logging.Logger;
 
-public class Drop extends ApplicationAdapter  {
+public class Drop extends ApplicationAdapter {
 
   public static final Integer LARGHEZZA_SCHERMO_GIOCO = 800;
   public static final Integer ALTEZZA_SCHERMO_GIOCO = 480;
@@ -54,11 +54,10 @@ public class Drop extends ApplicationAdapter  {
   @Override
   public void create() {
 
-
-
     WebSocketClient.getInstance().connectToWebSocket(username);
 
-    WebSocketClient.getInstance().inviaDatiInput(DatiInput.builder().username(username.toString()).keyDown(29).build());
+    WebSocketClient.getInstance()
+        .inviaDatiInput(DatiInput.builder().keyDown(KeyDown.builder().keycode(29).build()).build());
 
     initAssets();
 
@@ -75,11 +74,7 @@ public class Drop extends ApplicationAdapter  {
     //        energia = new Energia(navicella);
     //        cuore = new Cuore(navicella);
 
-
   }
-
-
-
 
   private void initScore() {
     score = 0;
@@ -106,34 +101,37 @@ public class Drop extends ApplicationAdapter  {
     InputProcessorCustom inputProcessor = new InputProcessorCustom();
     Gdx.input.setInputProcessor(inputProcessor);
 
-    if (navicella != null) {
-      navicella.elementiRender(energia.getActors(), nemico.getActors());
-      nemico.elementiRender();
-      energia.elementiRender();
-      cuore.elementiRender();
-
-      Integer punteggioDagliSpari =
-          Proiettile.movimentoProiettile(
-              navicella.getProiettili(), energia.getActors(), nemico.getActors());
-      Integer scoreNemico = nemico.movimentoNemico();
-      Integer scoreEnergia = energia.movimentoEnergia();
-      cuore.movimentoCuore();
-
-      int punteggio = punteggioDagliSpari + scoreNemico + scoreEnergia;
-
-      aggiornaPunteggio(punteggio);
-    }
+//    if (navicella != null) {
+//      //      navicella.elementiRender(energia.getActors(), nemico.getActors());
+//      nemico.elementiRender();
+//      energia.elementiRender();
+//      cuore.elementiRender();
+//
+//      Integer punteggioDagliSpari =
+//          ProiettileActor.movimentoProiettile(
+//              navicella.getProiettili(), energia.getActors(), nemico.getActors());
+//      Integer scoreNemico = nemico.movimentoNemico();
+//      Integer scoreEnergia = energia.movimentoEnergia();
+//      cuore.movimentoCuore();
+//
+//      int punteggio = punteggioDagliSpari + scoreNemico + scoreEnergia;
+//
+//      aggiornaPunteggio(punteggio);
+//    }
   }
 
   @Override
   public void dispose() {
     //    dropSound.dispose();
     //    rainMusic.dispose();
-    batch.dispose();
-    navicella.dispose();
-    energia.dispose();
-    nemico.dispose();
-    cuore.dispose();
+
+    //    batch.dispose();
+    //    navicella.dispose();
+    //    energia.dispose();
+    //    nemico.dispose();
+    //    cuore.dispose();
+
+    giocatoreList.forEach(g -> g.getNavicella().dispose());
   }
 
   private static void setSfondo() {
@@ -152,20 +150,19 @@ public class Drop extends ApplicationAdapter  {
     }
 
     giocatoreList.clear();
+
+
     List<GiocatoreResource> player = StatoGiocoApplicationService.getInstance().getPlayer();
+    List<ProiettileResource> proiettileResources = StatoGiocoApplicationService.getInstance().getProiettileResources();
+
+    for(ProiettileResource p  : proiettileResources){
+      Proiettile proiettile = new Proiettile(p);
+      proiettile.getActor().eseguiDraw(batch);
+    }
 
     for (GiocatoreResource giocatoreReource : player) {
       Giocatore giocatore = new Giocatore(giocatoreReource);
-
-//      if(giocatore.getUsername().equals(username)){
-//        this.giocatore=giocatore;
-//      }
-
-
-//      giocatori.add(giocatore);
-//      giocatoreList.add(giocatore);
       giocatore.getNavicella().eseguiDraw(batch);
-
     }
 
     renderScore();

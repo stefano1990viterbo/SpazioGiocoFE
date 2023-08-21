@@ -12,5 +12,5 @@ import lombok.ToString;
 public class StatoGiocoResource {
 
   private List<GiocatoreResource> giocatori = new ArrayList<>();
-
+  private List<ProiettileResource> proiettili = new ArrayList<>();
 }

@@ -18,9 +18,9 @@ import java.util.Iterator;
 import java.util.logging.Logger;
 
 
-public class Proiettile extends Rectangle {
+public class ProiettileActor extends Rectangle {
 
-  static final Logger logger = Logger.getLogger(Proiettile.class.getName());
+  static final Logger logger = Logger.getLogger(ProiettileActor.class.getName());
 
   public static int WIDTH = 12;
   public static int HEIGHT = 12;
@@ -37,7 +37,7 @@ public class Proiettile extends Rectangle {
 
 //  private boolean puoiSparare = true;
 
-  public Proiettile() {
+  public ProiettileActor() {
     laserImage = new Texture(Gdx.files.internal("laser.png"));
   }
 
@@ -57,11 +57,11 @@ public class Proiettile extends Rectangle {
   }
 
   public static Integer movimentoProiettile(
-      Array<Proiettile> proiettili, Array<Rectangle> gocce, Array<Rectangle> asteroidi) {
+      Array<ProiettileActor> proiettili, Array<Rectangle> gocce, Array<Rectangle> asteroidi) {
 
-    for (Iterator<Proiettile> iterProiettile = proiettili.iterator(); iterProiettile.hasNext(); ) {
+    for (Iterator<ProiettileActor> iterProiettile = proiettili.iterator(); iterProiettile.hasNext(); ) {
 
-      Proiettile proiettile = null;
+      ProiettileActor proiettile = null;
       try {
         proiettile = iterProiettile.next();
 
@@ -97,7 +97,7 @@ public class Proiettile extends Rectangle {
     return 0;
   }
 
-  private static void rimuoviProiettile(Iterator<Proiettile> iterProiettile) {
+  private static void rimuoviProiettile(Iterator<ProiettileActor> iterProiettile) {
     try {
       iterProiettile.remove();
     } catch (IndexOutOfBoundsException e) {
@@ -106,7 +106,7 @@ public class Proiettile extends Rectangle {
   }
 
   private static void eliminaProiettileOltreLaSchermata(
-      Iterator<Proiettile> iterProiettile, Proiettile proiettile) {
+      Iterator<ProiettileActor> iterProiettile, ProiettileActor proiettile) {
     if (proiettile.y + 64 < 0) {
       rimuoviProiettile(iterProiettile);
     } else if (proiettile.y + 64 > Drop.ALTEZZA_SCHERMO_GIOCO) {
@@ -120,7 +120,7 @@ public class Proiettile extends Rectangle {
     }
   }
 
-  private static void aggiornaCoordinateDelProiettile(Proiettile proiettile) {
+  private static void aggiornaCoordinateDelProiettile(ProiettileActor proiettile) {
     float xConosciuta = 0;
     float yCalcolata = 0;
     int unitaX = 1;
@@ -145,7 +145,7 @@ public class Proiettile extends Rectangle {
     proiettile.y = yCalcolata;
   }
 
-  private static float calcolaRapportoY(Proiettile proiettile) {
+  private static float calcolaRapportoY(ProiettileActor proiettile) {
     return abs(
         (proiettile.getyDirezione() - proiettile.y) / (proiettile.getxDirezione() - proiettile.x));
   }
@@ -169,13 +169,13 @@ public class Proiettile extends Rectangle {
         this.getRotazioneInGradi());
   }
 
-  public Proiettile creazioneProiettile(Navicella riferimentoNavicella) {
+  public ProiettileActor creazioneProiettile(Navicella riferimentoNavicella) {
     Vector3 touchPos = new Vector3();
     float yInvertita = Gdx.graphics.getHeight() - Gdx.input.getY();
     touchPos.set(Gdx.input.getX(), yInvertita, 0);
 
 //    Proiettile proiettile = new Proiettile();
-    Proiettile proiettile = this;
+    ProiettileActor proiettile = this;
     proiettile.x = riferimentoNavicella.getX() + WIDTH;
     proiettile.y = riferimentoNavicella.getY();
 
@@ -193,8 +193,8 @@ public class Proiettile extends Rectangle {
     proiettile.setxDirezione(xOltreSchermo);
     proiettile.setyDirezione(yOltreSchermo);
 
-    proiettile.width = Proiettile.WIDTH;
-    proiettile.height = Proiettile.HEIGHT;
+    proiettile.width = ProiettileActor.WIDTH;
+    proiettile.height = ProiettileActor.HEIGHT;
     proiettile.setRotazioneInGradi(riferimentoNavicella.getRotazioneInGradi());
 //    proiettili.add(proiettile);
     riferimentoNavicella.setLastProiettileTime(TimeUtils.nanoTime());
