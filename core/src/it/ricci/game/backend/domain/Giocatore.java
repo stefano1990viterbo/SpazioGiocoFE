@@ -41,6 +41,10 @@ public class Giocatore {
     navicella.setRotazioneInGradi(angolo);
     navicella.setX(resource.getX().floatValue());
     navicella.setY(resource.getY().floatValue());
+
+    //TODO controllare
+    navicella.setWidth(resource.getWidth());
+    navicella.setHeight(resource.getHeight());
   }
 
 }

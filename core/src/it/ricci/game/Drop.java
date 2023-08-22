@@ -186,4 +186,8 @@ public class Drop extends ApplicationAdapter {
     scoreName = "score: " + score;
     vite = " Vite: " + String.valueOf(navicella.getVite());
   }
+
+  public static void chiudiGioco(){
+    Gdx.app.exit();
+  }
 }

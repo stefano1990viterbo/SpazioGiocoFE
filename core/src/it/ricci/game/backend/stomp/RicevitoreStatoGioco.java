@@ -40,6 +40,10 @@ public class RicevitoreStatoGioco extends StompSessionHandlerAdapter {
 
     log.info("Mi sono connesso");
     session.subscribe("/topic/aggiornagioco", this);
+
+
+
+
   }
 
   @Override

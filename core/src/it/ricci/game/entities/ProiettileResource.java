@@ -12,10 +12,12 @@ import lombok.ToString;
 public class ProiettileResource {
   private UUID id;
   private Duration durata;
-  private Double xPartenza;
-  private Double yPartenza;
+  private Double x;
+  private Double y;
   private Double xDirezione;
   private Double yDirezione;
   private Double angoloDiDirezione;
   private int velocita;
+  private int width;
+  private int height;
 }

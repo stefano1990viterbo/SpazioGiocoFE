@@ -2,7 +2,6 @@ package it.ricci.game.backend.domain;
 
 import it.ricci.game.attori.ProiettileActor;
 import it.ricci.game.entities.ProiettileResource;
-import java.time.Duration;
 import java.util.UUID;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,8 +21,8 @@ public class Proiettile {
 
     actor=new ProiettileActor();
 
-    actor.x=resource.getXPartenza().floatValue();
-    actor.y=resource.getYPartenza().floatValue();
+    actor.x=resource.getX().floatValue();
+    actor.y=resource.getY().floatValue();
    actor.setRotazioneInGradi(resource.getAngoloDiDirezione().floatValue());
   }
 }

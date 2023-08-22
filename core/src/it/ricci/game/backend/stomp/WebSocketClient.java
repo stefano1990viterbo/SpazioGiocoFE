@@ -1,6 +1,7 @@
 package it.ricci.game.backend.stomp;
 
 import it.ricci.game.Drop;
+import it.ricci.game.backend.application.services.StatoGiocoApplicationService;
 import it.ricci.game.entities.GiocatoreResource;
 import it.ricci.game.entities.input_utente.DatiInput;
 import java.util.UUID;
@@ -52,6 +53,8 @@ public class WebSocketClient {
     try {
       StompSession stompSession = stompClient.connect(url, handshakeHeaders, sessionHandler).get();
       this.stompSession = stompSession;
+
+      StatoGiocoApplicationService.getInstance().inizializzaGiocatoreDiSessione(username);
 
 
     } catch (Exception e) {
