@@ -26,7 +26,7 @@ public class DatiInputService {
     inviaDatiInput();
   }
 
-  private void inviaDatiInput(){
+  public void inviaDatiInput(){
     WebSocketClient.getInstance().inviaDatiInput(this.input);
   }
 }

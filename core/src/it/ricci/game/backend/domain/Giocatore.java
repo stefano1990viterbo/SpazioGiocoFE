@@ -23,6 +23,8 @@ public class Giocatore {
   private Double x;
   private Double y;
   private Double angoloDiDirezione;
+  private int vite;
+  private int punteggio;
 
   public Giocatore(UUID username) {
     this.username = username;
@@ -32,6 +34,7 @@ public class Giocatore {
 
     this.id = resource.getId();
     this.username = resource.getUsername();
+    this.vite = resource.getVite();
 
     navicella = new Navicella();
 
@@ -45,6 +48,14 @@ public class Giocatore {
     //TODO controllare
     navicella.setWidth(resource.getWidth());
     navicella.setHeight(resource.getHeight());
+
+    navicella.setVite(this.vite);
+
+    if(this.vite<1){
+      navicella.impostaImmagineDistruzione();
+    }
+
+
   }
 
 }

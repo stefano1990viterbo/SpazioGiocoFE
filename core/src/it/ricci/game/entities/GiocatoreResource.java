@@ -21,4 +21,6 @@ public class GiocatoreResource {
   private Double angoloDiDirezione;
   private int width;
   private int height;
+  private int vite;
+  private int punteggio;
 }

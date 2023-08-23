@@ -240,4 +240,13 @@ public class ProiettileActor extends Rectangle {
   public void setRotazioneInGradi(float rotazioneInGradi) {
     this.rotazioneInGradi = rotazioneInGradi;
   }
+
+
+  public Texture getLaserImage() {
+    return laserImage;
+  }
+
+  public void dispose() {
+    this.getLaserImage().dispose();
+  }
 }

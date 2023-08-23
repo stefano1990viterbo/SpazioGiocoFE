@@ -1,6 +1,9 @@
 package it.ricci.game.backend.stomp;
 
 import it.ricci.game.Drop;
+import it.ricci.game.GameScreen;
+import it.ricci.game.MainMenuScreen;
+import it.ricci.game.SpazioGame;
 import it.ricci.game.backend.application.services.StatoGiocoApplicationService;
 import it.ricci.game.entities.GiocatoreResource;
 import it.ricci.game.entities.input_utente.DatiInput;
@@ -72,7 +75,8 @@ public class WebSocketClient {
   }
 
   public void inviaDatiInput(DatiInput input){
-    input.setUsernameKeyboard(Drop.username.toString());
+//    input.setUsernameKeyboard(Drop.username.toString());
+    input.setUsernameKeyboard(MainMenuScreen.username.toString());
     Receiptable send = stompSession.send("/app/key-input", input);
   }
 }

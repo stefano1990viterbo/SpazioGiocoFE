@@ -1,6 +1,8 @@
 package it.ricci.game.backend.application.services;
 
 import it.ricci.game.Drop;
+import it.ricci.game.GameScreen;
+import it.ricci.game.SpazioGame;
 import it.ricci.game.backend.application.ports.input.AggiornaStatoGiocoUseCase;
 import it.ricci.game.backend.domain.Giocatore;
 import it.ricci.game.entities.GiocatoreResource;
@@ -57,7 +59,7 @@ public class StatoGiocoApplicationService implements AggiornaStatoGiocoUseCase {
     Optional<GiocatoreResource> giocatoreDiSessione = statoGioco.getGiocatori().stream()
         .filter(g -> g.getUsername().equals(ursernameDiSessione)).findFirst();
     if(!giocatoreDiSessione.isPresent()){
-      Drop.chiudiGioco();
+//      GameScreen.chiudiGioco();
     }
 
     this.proiettileResources = statoGioco.getProiettili();

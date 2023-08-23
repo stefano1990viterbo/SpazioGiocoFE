@@ -1,6 +1,5 @@
 package it.ricci.game.backend.stomp;
 
-import it.ricci.game.SpazioGioco;
 import it.ricci.game.backend.application.services.StatoGiocoApplicationService;
 import it.ricci.game.entities.StatoGiocoResource;
 import java.lang.reflect.Type;

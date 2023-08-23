@@ -110,7 +110,7 @@ public class Navicella extends Rectangle {
 
   private void drawNavicella(SpriteBatch batch) {
     //    TextureRegion textureRegion = new TextureRegion(tempImage);
-    TextureRegion textureRegion = new TextureRegion(tempImage);
+    TextureRegion textureRegion = new TextureRegion(image);
     float originX = textureRegion.getRegionWidth() / 2f; // Punto centrale della texture sull'asse x
     float originY =
         textureRegion.getRegionHeight() / 2f; // Punto centrale della texture sull'asse y
@@ -220,5 +220,9 @@ public class Navicella extends Rectangle {
 
   public void setLastProiettileTime(long lastProiettileTime) {
     this.lastProiettileTime = lastProiettileTime;
+  }
+
+  public void impostaImmagineDistruzione(){
+    this.setImage(imageDestory);
   }
 }

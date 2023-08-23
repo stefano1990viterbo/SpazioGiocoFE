@@ -2,11 +2,14 @@ package it.ricci.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 import it.ricci.game.attori.*;
+import it.ricci.game.backend.application.services.DatiInputService;
 import it.ricci.game.backend.application.services.StatoGiocoApplicationService;
 import it.ricci.game.backend.domain.Giocatore;
 import it.ricci.game.backend.domain.Proiettile;
@@ -21,13 +24,14 @@ import java.util.List;
 import java.util.UUID;
 import java.util.logging.Logger;
 
+//public class Drop extends ApplicationAdapter {
 public class Drop extends ApplicationAdapter {
 
   public static final Integer LARGHEZZA_SCHERMO_GIOCO = 800;
   public static final Integer ALTEZZA_SCHERMO_GIOCO = 480;
 
   static final Logger logger = Logger.getLogger(Drop.class.getName());
-  private SpriteBatch batch;
+   SpriteBatch batch;
   private OrthographicCamera camera;
 
   //  private Sound dropSound;
@@ -69,17 +73,14 @@ public class Drop extends ApplicationAdapter {
 
     initScore();
 
-    //        navicella = new Navicella();
-    //        nemico = new Nemico(navicella);
-    //        energia = new Energia(navicella);
-    //        cuore = new Cuore(navicella);
-
+    this.giocatore= new Giocatore(StatoGiocoApplicationService.getInstance().getGiocatoreDiSessione().getUsername());
   }
 
   private void initScore() {
     score = 0;
     scoreName = "score: 0";
-    vite = " Vite: 3";
+    int viteGiocatore = giocatore==null?0:giocatore.getVite();
+    vite = " Vite: "+ viteGiocatore;
     bitmapFontName = new BitmapFont();
   }
 
@@ -98,8 +99,8 @@ public class Drop extends ApplicationAdapter {
     setSfondo();
     cicloVitaBatch();
 
-    InputProcessorCustom inputProcessor = new InputProcessorCustom();
-    Gdx.input.setInputProcessor(inputProcessor);
+//    InputProcessorCustom inputProcessor = new InputProcessorCustom();
+    Gdx.input.setInputProcessor(InputProcessorCustom.getInstance());
 
 //    if (navicella != null) {
 //      //      navicella.elementiRender(energia.getActors(), nemico.getActors());
@@ -118,6 +119,33 @@ public class Drop extends ApplicationAdapter {
 //
 //      aggiornaPunteggio(punteggio);
 //    }
+//    if(InputProcessorCustom.getInstance().isStoPremendoIlTasto()){
+//
+//      DatiInputService.getInstance()
+//          .inviaDatiInput();
+//    }
+    gestioneTasti();
+  }
+
+  private void gestioneTasti(){
+    if (Gdx.input.isKeyPressed(Keys.A)) {
+      DatiInputService.getInstance()
+          .setInput(DatiInput.builder().keyDown(KeyDown.builder().keycode(Keys.A).build()).build());
+    }
+    if (Gdx.input.isKeyPressed(Keys.D)) {
+      DatiInputService.getInstance()
+          .setInput(DatiInput.builder().keyDown(KeyDown.builder().keycode(Keys.D).build()).build());
+    }
+
+    if (Gdx.input.isKeyPressed(Keys.W)) {
+      DatiInputService.getInstance()
+          .setInput(DatiInput.builder().keyDown(KeyDown.builder().keycode(Keys.W).build()).build());
+    }
+
+    if (Gdx.input.isKeyPressed(Keys.S)) {
+      DatiInputService.getInstance()
+          .setInput(DatiInput.builder().keyDown(KeyDown.builder().keycode(Keys.S).build()).build());
+    }
   }
 
   @Override
@@ -132,6 +160,7 @@ public class Drop extends ApplicationAdapter {
     //    cuore.dispose();
 
     giocatoreList.forEach(g -> g.getNavicella().dispose());
+
   }
 
   private static void setSfondo() {
@@ -163,11 +192,17 @@ public class Drop extends ApplicationAdapter {
     for (GiocatoreResource giocatoreReource : player) {
       Giocatore giocatore = new Giocatore(giocatoreReource);
       giocatore.getNavicella().eseguiDraw(batch);
+      if(this.giocatore!=null && giocatore.getUsername().equals(this.giocatore.getUsername())){
+        this.giocatore=giocatore;
+//        giocatore.getNavicella().aggiornaVite(giocatoreReource.getVite());
+        this.vite = "Vite: "+giocatore.getVite();
+      }
     }
 
     renderScore();
     batch.end();
   }
+
 
   private void renderScore() {
     bitmapFontName.setColor(1.0f, 1.0f, 1.0f, 1.0f);
