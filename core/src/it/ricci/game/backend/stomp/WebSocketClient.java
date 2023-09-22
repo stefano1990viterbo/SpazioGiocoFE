@@ -77,6 +77,11 @@ public class WebSocketClient {
   public void inviaDatiInput(DatiInput input){
 //    input.setUsernameKeyboard(Drop.username.toString());
     input.setUsernameKeyboard(MainMenuScreen.username.toString());
-    Receiptable send = stompSession.send("/app/key-input", input);
+
+    try{
+      Receiptable send = stompSession.send("/app/key-input", input);
+    }catch (Exception e){
+  log.error(()-> "Impossibile stabilire una connessione:"+e.getMessage());
+    }
   }
 }

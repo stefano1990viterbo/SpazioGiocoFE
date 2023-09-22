@@ -1,8 +1,5 @@
 package it.ricci.game.attori;
 
-import static it.ricci.game.Calcoli.Trigonometria.trovaXDaYDellaRetta;
-import static it.ricci.game.Calcoli.Trigonometria.trovaYDaXDellaRetta;
-import static it.ricci.game.Drop.LARGHEZZA_SCHERMO_GIOCO;
 import static java.lang.Math.abs;
 
 import com.badlogic.gdx.Gdx;
@@ -10,13 +7,10 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.TimeUtils;
 import it.ricci.game.Drop;
 import java.util.Iterator;
 import java.util.logging.Logger;
-
 
 public class ProiettileActor extends Rectangle {
 
@@ -32,10 +26,9 @@ public class ProiettileActor extends Rectangle {
 
   private float rotazioneInGradi;
 
-
   private long lastProiettileTime;
 
-//  private boolean puoiSparare = true;
+  //  private boolean puoiSparare = true;
 
   public ProiettileActor() {
     laserImage = new Texture(Gdx.files.internal("laser.png"));
@@ -59,7 +52,8 @@ public class ProiettileActor extends Rectangle {
   public static Integer movimentoProiettile(
       Array<ProiettileActor> proiettili, Array<Rectangle> gocce, Array<Rectangle> asteroidi) {
 
-    for (Iterator<ProiettileActor> iterProiettile = proiettili.iterator(); iterProiettile.hasNext(); ) {
+    for (Iterator<ProiettileActor> iterProiettile = proiettili.iterator();
+        iterProiettile.hasNext(); ) {
 
       ProiettileActor proiettile = null;
       try {
@@ -129,7 +123,7 @@ public class ProiettileActor extends Rectangle {
     float veloCitaAlSegmento = VELOCITA / nSegmenti;
 
     if (proiettile.getxDirezione() >= proiettile.x) {
-      //Gdx.graphics.getDeltaTime();
+      // Gdx.graphics.getDeltaTime();
       xConosciuta = proiettile.x + veloCitaAlSegmento;
     } else {
       xConosciuta = proiettile.x - veloCitaAlSegmento;
@@ -169,54 +163,6 @@ public class ProiettileActor extends Rectangle {
         this.getRotazioneInGradi());
   }
 
-  public ProiettileActor creazioneProiettile(Navicella riferimentoNavicella) {
-    Vector3 touchPos = new Vector3();
-    float yInvertita = Gdx.graphics.getHeight() - Gdx.input.getY();
-    touchPos.set(Gdx.input.getX(), yInvertita, 0);
-
-//    Proiettile proiettile = new Proiettile();
-    ProiettileActor proiettile = this;
-    proiettile.x = riferimentoNavicella.getX() + WIDTH;
-    proiettile.y = riferimentoNavicella.getY();
-
-    float yOltreSchermo =
-            trovaYDaXDellaRetta(
-                    proiettile.x,
-                    proiettile.y,
-                    touchPos.x,
-                    touchPos.y,
-                    setXConosciuta(proiettile.x, touchPos.x));
-
-    float xOltreSchermo =
-            trovaXDaYDellaRetta(proiettile.x, proiettile.y, touchPos.x, touchPos.y, yOltreSchermo);
-
-    proiettile.setxDirezione(xOltreSchermo);
-    proiettile.setyDirezione(yOltreSchermo);
-
-    proiettile.width = ProiettileActor.WIDTH;
-    proiettile.height = ProiettileActor.HEIGHT;
-    proiettile.setRotazioneInGradi(riferimentoNavicella.getRotazioneInGradi());
-//    proiettili.add(proiettile);
-    riferimentoNavicella.setLastProiettileTime(TimeUtils.nanoTime());
-    riferimentoNavicella.setPuoiSparare(false);
-
-    return proiettile;
-  }
-
-  private float setXConosciuta(float xProiettileIniziale, float yDirezioneProiettile) {
-    if (yDirezioneProiettile >= xProiettileIniziale) {
-      return xProiettileIniziale + LARGHEZZA_SCHERMO_GIOCO;
-    } else {
-      return xProiettileIniziale - LARGHEZZA_SCHERMO_GIOCO;
-    }
-  }
-
-//  public void controlloIntervalloCreazioneProiettile() {
-//    if (TimeUtils.nanoTime() - lastProiettileTime > 100000000) {
-//      riferimentoNavicella.setPuoiSparare(true);
-//    }
-//  }
-
   public float getxDirezione() {
     return xDirezione;
   }
@@ -240,7 +186,6 @@ public class ProiettileActor extends Rectangle {
   public void setRotazioneInGradi(float rotazioneInGradi) {
     this.rotazioneInGradi = rotazioneInGradi;
   }
-
 
   public Texture getLaserImage() {
     return laserImage;

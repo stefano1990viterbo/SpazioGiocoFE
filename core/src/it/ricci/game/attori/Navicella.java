@@ -72,23 +72,6 @@ public class Navicella extends Rectangle {
       tempImage = image;
   }
 
-//  private void spostamenti() {
-//    configuraMovimentoConFrecce();
-//    configuraMovimentoConWASD();
-//    setRotazioneInGradi(calcoloAngoloDiRotazione());
-//    configuraSparo();
-//  }
-
-  private void configuraSparo() {
-    if (Gdx.input.isKeyPressed(Input.Keys.SPACE) && puoiSparare) {
-      //      creazioneProiettile();
-      ProiettileActor proiettile = new ProiettileActor();
-      proiettile.creazioneProiettile(this);
-      proiettili.add(proiettile);
-    }
-  }
-
-
 
 
   public void controlloIntervalloCreazioneProiettile() {
@@ -165,16 +148,6 @@ public class Navicella extends Rectangle {
     this.getImage().dispose();
   }
 
-  public Array<ProiettileActor> getProiettili() {
-    return proiettili;
-  }
-
-//  public void elementiRender(Array<Rectangle> gocce, Array<Rectangle> asteroidi) {
-//    this.spostamenti();
-//    this.limiti();
-//    //    this.movimentoProiettile(gocce, asteroidi);
-//    this.controlloIntervalloCreazioneProiettile();
-//  }
 
   public void setImage(Texture image) {
     this.image = image;
@@ -206,21 +179,6 @@ public class Navicella extends Rectangle {
     }
   }
 
-  public void setPuoiSparare(boolean puoiSparare) {
-    this.puoiSparare = puoiSparare;
-  }
-
-  public int getVelocitaNavicella() {
-    return velocitaNavicella;
-  }
-
-  public void setVelocitaNavicella(int velocitaNavicella) {
-    this.velocitaNavicella = velocitaNavicella;
-  }
-
-  public void setLastProiettileTime(long lastProiettileTime) {
-    this.lastProiettileTime = lastProiettileTime;
-  }
 
   public void impostaImmagineDistruzione(){
     this.setImage(imageDestory);

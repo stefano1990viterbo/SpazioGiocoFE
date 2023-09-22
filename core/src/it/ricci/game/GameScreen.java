@@ -46,7 +46,7 @@ public class GameScreen implements Screen {
   private Integer score;
   private String scoreName;
 
-  private String vite;
+  private Integer vite;
   BitmapFont bitmapFontName;
 
   private Navicella navicella;
@@ -85,7 +85,7 @@ public class GameScreen implements Screen {
 
   @Override
   public void show() {
-    menuConPulsante();
+//    menuConPulsante();
   }
 
   private void menuConPulsante() {
@@ -132,6 +132,16 @@ public class GameScreen implements Screen {
     setSfondo();
     cicloVitaBatch();
     gestioneTasti();
+    informazioniDaVisualizzare();
+  }
+
+  private void informazioniDaVisualizzare() {
+    camera.update();
+    game.batch.setProjectionMatrix(camera.combined);
+    game.batch.begin();
+    String labelVita= String.format("Vite: %s",vite);
+    game.font.draw(game.batch, labelVita, 50, 50);
+    game.batch.end();
   }
 
   private void gestioneTasti() {
@@ -197,7 +207,7 @@ public class GameScreen implements Screen {
       giocatore.getNavicella().eseguiDraw(game.batch);
       if (this.giocatore != null && giocatore.getUsername().equals(this.giocatore.getUsername())) {
         this.giocatore = giocatore;
-        this.vite = "Vite: " + giocatore.getVite();
+        this.vite = giocatore.getVite();
       }
     }
   }
